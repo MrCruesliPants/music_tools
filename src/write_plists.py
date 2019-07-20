@@ -1,24 +1,73 @@
 
-from utils import list_tracks, get_orgtags, exclude_tags
+import os
 
-plists = {'8bit' : '8bit',
-          'soundtracks' : 'soundtrack'}
+from utils import list_tracks, exclude_tags, match_tags
+
+# plists = {'all_shuffle' : {'mode' : 'exclude',
+#                            'tags' : ['protected']}}
 
 
+class Plists_Generator():
 
-def write_plists(audio_dirs, plist_dir, extensions=['.mp3', '.flac']):
 
-    not_soundtrack = []
-
-    for folder in audio_dirs:
-
-        for track in list_tracks(folder, extensions):
-
-            if not exclude_tags(track, ['soundtrack']):
-                not_soundtrack.append(track)
-
+    def __init__(self, audio_dirs, plist_dir,
+                 plists, extensions=['.mp3', '.flac']):
+        
+        self.audio_dirs = audio_dirs
+        self.plist_dir = plist_dir
+        self.plists = plists
+        self.extensions = extensions
 
         
-    print(not_soundtrack)
+    def _add_output_array(self):
+        for fname in self.plists.keys():
+            self.plists[fname]['tracks']=[]
+
+
+    def _match_track_to_plist(self, track, fname):
+        if self.plists[fname]['mode'] == 'match':
+            if match_tags(track, self.plists[fname]['tags']):
+                self.plists[fname]['tracks'].append(track)
+        
+
+    def scan_audio_dirs_and_add_tracks(self):
+
+        for folder in self.audio_dirs:
+
+            for track in list_tracks(folder, self.extensions):
+                
+                for fname in self.plists.keys():
+                    # add_to_plist(track, fname)
+                    # self.plists[fname]['tracks'].append(track)
+                    self._match_track_to_plist(track, fname)
+
+                    
+    def save_plists(self):
+
+        for fname in self.plists.keys():
+
+            fpath = os.path.join(self.plist_dir, fname + '.m3u8')
+             
+            tracks = map(lambda x: x + '\n',
+                         self.plists[fname]['tracks'])
+            
+            with open(fpath, 'w') as file_m3u8:
+                file_m3u8.writelines(tracks)
+
+                    
+    def generate(self):
+
+        self._add_output_array()
+        self.scan_audio_dirs_and_add_tracks()
+        
+        # for fname in self.plists.keys():
+        #     print(self.plists[fname]['tracks'])
+
+        # print(self.plists)
+
+
+        self.save_plists()
+
+
 
 

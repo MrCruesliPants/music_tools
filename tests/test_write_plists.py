@@ -1,17 +1,25 @@
 
 import unittest, os
 
-from src.write_plists import write_plists
+from src.write_plists import Plists_Generator
 
 
-class Test_ist_tracks(unittest.TestCase):
+class Test_Plists_Generator(unittest.TestCase):
 
     def test_run(self):
 
-        dirs = ['./samples']
+        dirs = ['samples/']
 
-        write_plists(dirs, '', extensions=['.mp3', '.flac'])
+        plists = {'soundtrack_all'  : {'mode' : 'match',
+                                       'tags' : ['soundtrack']},
+                  'soundtrack_anime': {'mode' : 'match',
+                                       'tags' : ['soundtrack', 'anime']}}
 
+
+        PG = Plists_Generator(dirs, 'outputs', plists,
+                              extensions=['.mp3', '.flac'])
+
+        PG.generate()
         # print(list_tracks(directory, ['.mp3']))
 
-        self.assertTrue(True)
+        # self.assertTrue(True)

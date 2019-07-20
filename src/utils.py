@@ -61,17 +61,30 @@ def exclude_tags(track, tags):
 
     orgtags = get_orgtags(track)
 
-    print(track)
-    print(tags)
-    print(orgtags)
+    # print(track)
+    # print(tags)
+    # print(orgtags)
 
-    print(set(orgtags))
-    print(set(tags))
+    # print(set(orgtags))
+    # print(set(tags))
+    # print(set(orgtags).intersection(set(tags)))
 
-    if set(orgtags).intersection(set(tags)):
-        print('no match')
-    else:
-        print('match')
+    return bool(set(orgtags).intersection(set(tags)))
 
-    print('\n')
+
+def match_tags(track, tags):
+
+    assert type(tags)==list
+        
+    orgtags = get_orgtags(track)
+
+    # print(track)
+    # print(tags)
+    # print(orgtags)
+
+    # print(set(orgtags))
+    # print(set(tags))
+    # print(set(tags).issubset(set(orgtags)))
+
+    return set(tags).issubset(set(orgtags))
 
