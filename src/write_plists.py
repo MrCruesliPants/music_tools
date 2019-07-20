@@ -47,9 +47,12 @@ class Plists_Generator():
         for fname in self.plists.keys():
 
             fpath = os.path.join(self.plist_dir, fname + '.m3u8')
-             
-            tracks = map(lambda x: x + '\n',
-                         self.plists[fname]['tracks'])
+
+            tracks = [os.path.relpath(track, self.plist_dir)
+                        for track in self.plists[fname]['tracks']]
+            
+            tracks = map(lambda x: x + '\n', tracks)
+
             
             with open(fpath, 'w') as file_m3u8:
                 file_m3u8.writelines(tracks)

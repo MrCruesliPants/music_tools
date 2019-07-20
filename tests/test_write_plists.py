@@ -16,7 +16,7 @@ class Test_Plists_Generator(unittest.TestCase):
                                        'tags' : ['soundtrack', 'anime']}}
 
 
-        PG = Plists_Generator(dirs, 'outputs', plists,
+        PG = Plists_Generator(dirs, 'output', plists,
                               extensions=['.mp3', '.flac'])
 
         PG.generate()
