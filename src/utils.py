@@ -88,3 +88,23 @@ def match_tags(track, tags):
 
     return set(tags).issubset(set(orgtags))
 
+
+
+def match_any_tag(track, tags):
+
+    assert type(tags)==list
+        
+    orgtags = get_orgtags(track)
+
+    # print(track)
+    # print(tags)
+    # print(orgtags)
+
+    # print(set(orgtags))
+    # print(set(tags))
+    # print(set(tags).issubset(set(orgtags)))
+
+    return bool(set(orgtags).intersection(set(tags)))
+
+
+

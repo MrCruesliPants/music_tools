@@ -1,7 +1,8 @@
 
 import os
 
-from utils import list_tracks, exclude_tags, match_tags
+from utils import list_tracks, exclude_tags, match_tags, \
+                  match_any_tag
 
 # plists = {'all_shuffle' : {'mode' : 'exclude',
 #                            'tags' : ['protected']}}
@@ -27,6 +28,9 @@ class Plists_Generator():
     def _match_track_to_plist(self, track, fname):
         if self.plists[fname]['mode'] == 'match':
             if match_tags(track, self.plists[fname]['tags']):
+                self.plists[fname]['tracks'].append(track)
+        elif self.plists[fname]['mode'] == 'any':
+            if match_any_tag(track, self.plists[fname]['tags']):
                 self.plists[fname]['tracks'].append(track)
         
 
