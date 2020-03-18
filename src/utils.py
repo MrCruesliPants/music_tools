@@ -1,7 +1,7 @@
 
 import sys, os
 
-from mutagen.id3 import ID3
+from mutagen.id3 import ID3, ID3NoHeaderError
 from mutagen.flac import FLAC
 
 
@@ -29,11 +29,17 @@ def get_orgtags(track):
 
     if extension=='.mp3':
 
-        audio = ID3(track)
-
         try:
-            orgtags = str(audio[u'TXXX:organization']).split('/')
-        except KeyError:
+        
+            audio = ID3(track)
+
+            try:
+                orgtags = str(audio[u'TXXX:organization']).split('/')
+            except KeyError:
+                orgtags = ['']
+
+        except ID3NoHeaderError:
+            print('No ID3NoHeader in ', track)
             orgtags = ['']
 
     elif extension=='.flac':
