@@ -4,11 +4,17 @@ from src.write_plists import Plists_Generator
 
 base = '/media/fh/94ed305a-e630-4f3e-9aff-32995da5fb03/home/fh/'
 
-audio_dirs = [base+'audio/artists', base+'audio/soundtracks']
+audio_dirs = [base+'audio/artists',
+              base+'audio/soundtracks',
+              base+'audio/still_sort',
+              base+'audio/tmp']
+
 plist_dir = base + 'audio/playlists/generic_[new]'
 
 
-plists = {'deutsch'        : {'mode' : 'match',
+plists = {'shfx'           : {'mode' : 'exclude',
+                              'tags' : ['soundtrack']},
+          'deutsch'        : {'mode' : 'match',
                               'tags' : ['deutsch']},
           'deutsch_hip-hop': {'mode' : 'match',
                               'tags' : ['deutsch', 'hip-hop']},
