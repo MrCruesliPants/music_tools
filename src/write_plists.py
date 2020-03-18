@@ -26,12 +26,19 @@ class Plists_Generator():
 
 
     def _match_track_to_plist(self, track, fname):
+        
         if self.plists[fname]['mode'] == 'match':
             if match_tags(track, self.plists[fname]['tags']):
                 self.plists[fname]['tracks'].append(track)
+
         elif self.plists[fname]['mode'] == 'any':
             if match_any_tag(track, self.plists[fname]['tags']):
                 self.plists[fname]['tracks'].append(track)
+
+        elif self.plists[fname]['mode'] == 'exclude':
+            if not exclude_tags(track, self.plists[fname]['tags']):
+                self.plists[fname]['tracks'].append(track)
+
         
 
     def scan_audio_dirs_and_add_tracks(self):
