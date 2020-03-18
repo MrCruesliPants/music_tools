@@ -55,6 +55,10 @@ def get_orgtags(track):
         raise Exception('Unrecognized extension ', extension)
 
 
+    # non-musicbrainz tags may have an unwanted ` character
+    # as the first character of the first organization tag
+    orgtags = [tag.strip('`') for tag in orgtags]
+
     return orgtags
 
 
